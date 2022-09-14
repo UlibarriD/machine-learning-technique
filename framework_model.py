@@ -18,21 +18,17 @@ def regresionLineal(X_train, X_test, y_train, y_test):
     regr = LinearRegression()
     # entrenamos a nuestro modelo con nuestros datos de entrenamiento
     regr.fit(X_train, y_train)
-    # Imprimimos los resultados de nuestros scores
-    print(f'Exactitud del modelo: {regr.score(X_test, y_test)}')
-    print(f'Exactitud del modelo (train): {regr.score(X_train, y_train)}')
     # Obtenemos nuestra prediccion con los datos prueba
     y_pred = regr.predict(X_test)
+    # Imprimimos los resultados de nuestros scores
+    print(f'Coeficiente de determinación: {r2_score(y_test, y_pred)}')
+    print(f'Exactitud del modelo (train): {regr.score(X_train, y_train)}')
     # Imprimimos nuestros coeficientes
     print(f'Coeficientes: {regr.coef_}')
     # Mean squared error
     print(f'Mean squared error: {mean_squared_error(y_test, y_pred)}')
-    print(f'Coeficiente de determinación: {r2_score(y_test, y_pred)}')
     # Impresion del modelo
-    # plt.scatter(X_test, y_test, color="black")
-    # plt.plot(X_test, y_pred, color="red")
-
-    # plt.show()
+    return y_pred
 
 
 def main():
@@ -47,8 +43,10 @@ def main():
     # Dividimos nuestro dataset en test y train
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42)
-    regresionLineal(X_train, X_test, y_train, y_test)
-
+    y_pred = regresionLineal(X_train, X_test, y_train, y_test)
+    
+    testing = pd.DataFrame({'Actual_Price':y_test, 'Price_Prediction':y_pred})
+    print(testing)
 
 if __name__ == "__main__":
     main()
