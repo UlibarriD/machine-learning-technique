@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 # Modelo que utilizaremos para nuestras predicciones
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+from mlxtend.evaluate import bias_variance_decomp
 
 
 def regresionLineal(X_train, X_test, y_train, y_test):
@@ -41,12 +42,22 @@ def main():
     X = df.drop(columns=['Y house price of unit area', 'No'], axis=1)
     y = df['Y house price of unit area']
     # Dividimos nuestro dataset en test y train
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     y_pred = regresionLineal(X_train, X_test, y_train, y_test)
     
     testing = pd.DataFrame({'Actual_Price':y_test, 'Price_Prediction':y_pred})
     print(testing)
+    
+    regr = LinearRegression()
+    X_train = X_train.to_numpy()
+    X_test = X_test.to_numpy()
+    y_train = y_train.to_numpy()
+    y_test = y_test.to_numpy()
+    mse, bias, var = bias_variance_decomp(regr, X_train, y_train, X_test, y_test, loss='mse', num_rounds=200, random_seed=123)
+    print('MSE de bias_variance lib [pérdida promedio esperada]: %.3f' % mse)
+    print('Sesgo promedio: %.3f' % bias)
+    print('Varianza promedio: %.3f' % var)
+
 
 if __name__ == "__main__":
     main()

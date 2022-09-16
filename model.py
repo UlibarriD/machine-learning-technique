@@ -96,26 +96,20 @@ def main():
     lr = 0.01
     train_m, train_b = gradient_descent(X_train, y_train, m, b, epochs, lr)
     y_pred = linear_regression(X_test, train_m, train_b)
-    print(f'Coeficiente de determinación: {r2_score(y_test, y_pred)}')
+    print(f'\n\nCoeficiente de determinación: {r2_score(y_test, y_pred)}')
+    print(f'learning rate: {lr} \t epocas: {epochs}')
     print(pd.DataFrame({'Valor deseado': y_test, 'Valor obtenido': y_pred}))
     
     # Prueba 2
     m, b = np.random.rand((X_train.shape[1])) * 10, np.random.random()
-    epochs = 10000
-    lr = 0.00001
+    epochs = 80000
+    lr = 0.0001
     train_m, train_b = gradient_descent(X_train, y_train, m, b, epochs, lr)
     y_pred = linear_regression(X_test, train_m, train_b)
-    print(f'Coeficiente de determinación: {r2_score(y_test, y_pred)}')
+    print(f'\n\nCoeficiente de determinación: {r2_score(y_test, y_pred)}')
+    print(f'learning rate: {lr} \t epocas: {epochs}')
     print(pd.DataFrame({'Valor deseado': y_test, 'Valor obtenido': y_pred}))
     
-    # Prueba 3
-    m, b = np.random.rand((X_train.shape[1])) * 10, np.random.random()
-    epochs = 100000
-    lr = 0.1
-    train_m, train_b = gradient_descent(X_train, y_train, m, b, epochs, lr)
-    y_pred = linear_regression(X_test, train_m, train_b)
-    print(f'Coeficiente de determinación: {r2_score(y_test, y_pred)}')
-    print(pd.DataFrame({'Valor deseado': y_test, 'Valor obtenido': y_pred}))
 
 
 if __name__ == "__main__":
